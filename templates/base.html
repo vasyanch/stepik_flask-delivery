@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Stepik Delivery</title>
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <style>
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+    body {
+      margin-bottom: 60px; /* Margin bottom by footer height */
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60px; /* Set the fixed height of the footer here */
+      line-height: 60px; /* Vertically center the text there */
+    }
+    .navbar {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  {% include 'top_menu.html' %}
+
+  {%  block main_container %} {%  endblock %}
+
+  <footer class="footer">
+    <nav class="container navbar navbar-light bg-light">
+      <ul class="navbar-nav mr-auto">
+        <p class="h4 nav-link">Stepik Delivery</p>
+      </ul>
+      <a class="text-muted" href="https://github.com/vasyanch">Vasily Mikhaylov 2020</a>
+    </nav>
+  </footer>
+</body>
+</html>

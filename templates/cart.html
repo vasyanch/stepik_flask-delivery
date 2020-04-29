@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block main_container %}
+
+  <main class="container">
+    <h1 class="h3 my-4">Корзина</h1>
+
+    {% if message %}
+      <div class="alert alert-warning" role="alert">{{ message }}</div>
+    {% endif %}
+
+    {% if not session.user %}
+      <div class="alert alert-warning" role="alert">Чтобы сделать заказ – <a href="/login/">войдите</a> или <a href="/register/">зарегистрируйтесь</a></div>
+    {% endif %}
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <div class="row mt-5">
+      <div class="col-4">
+        <form action="/cart/" method="POST">
+          {{ form.csrf_token }}
+
+          <h4 class="">Ваши данные</h4>
+
+          <div class=" md-4 order-md-1">
+            <div class="mt-3 mb-3">
+              {{ form.name.label }}
+              {% for err in form.name.errors %}
+                <p class="alert alert-danger">{{ err }}</p>
+              {% endfor %}
+              {{ form.name(class="font-weight-bold form-control") }}
+            </div>
+          </div>
+
+          <div class=" md-4 order-md-1">
+            <div class="mt-3 mb-3">
+              {{ form.address.label }}
+              {% for err in form.address.errors %}
+                <p class="alert alert-danger">{{ err }}</p>
+              {% endfor %}
+              {{ form.address(class="font-weight-bold form-control") }}
+            </div>
+          </div>
+
+          <div class=" md-4 order-md-1">
+            <div class="mt-3 mb-3">
+              {{ form.email.label }}
+              {% for err in form.email.errors %}
+                <p class="alert alert-danger">{{ err }}</p>
+              {% endfor %}
+              {{ form.email(class="font-weight-bold form-control") }}
+            </div>
+          </div>
+
+          <div class=" md-4 order-md-1">
+            <div class="mt-3 mb-3">
+              {{ form.phone.label }}
+              {% for err in form.phone.errors %}
+                <p class="alert alert-danger">{{ err }}</p>
+              {% endfor %}
+              {{ form.phone(class="font-weight-bold form-control") }}
+            </div>
+          </div>
+          {% if session.user %}
+            {{ form.submit(class=" mt-3 mb-5 btn btn-danger") }}
+          {% endif %}
+        </form>
+      </div>
+
+      <div class="col-1"></div>
+
+      <div class="col-7">
+        <h4 class="mb-3 col-7 mb-5">
+            {% if cart %}
+              {{ cart.amount_dishes }}
+            {% else %}
+              {{ '0 блюд ' }}
+            {% endif %}
+            в корзине</h4>
+        <table class="table">
+          <tbody>
+            {% for dish in ordered_dishes %}
+              <tr>
+                <th scope="row">{{ dish.dish.title}}</th>
+                <td></td>
+                <td>{{ dish.amount }}</td>
+                <td>{{ dish.dish.price }}</td>
+                <td><a class="text-danger" href="/remove_from_cart/{{ dish.dish.id }}">Удалить</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <hr>
+        {% if cart %}
+          <p class="display-4 my-2 ">{{ cart.cart_sum }} руб</p>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+
+{%  endblock %}
